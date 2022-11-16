@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Leave;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -33,6 +34,18 @@ class LeaveController extends Controller
         return $this->success('Leaves data fetched',$leaves);
 
     }
+
+    public function remainLeave(Request $request)
+{
+    $leave=Leave::where('author',auth()->user()->id)->sum('total_leave');
+    $data=[
+        'leave_left'=>30-$leave,
+        'leave_taken'=>$leave
+    ];
+    return $this->success('Leaves data fetched',$data);
+    
+
+}
 
     /**
      * Show the form for creating a new resource.
@@ -66,10 +79,30 @@ class LeaveController extends Controller
     return $this->error($error,'',400);
     }
 
+    try {
+  
    $request['author']=auth()->user()->id; 
+//    fetching number of days 
+$toDate = Carbon::parse($request->vacation_end_date);
+$fromDate = Carbon::parse($request->vacation_start_date);
+$days = $toDate->diffInDays($fromDate);
 
+// total day laeval
+$leave_day=Leave::where('author',auth()->user()->id)->sum('total_leave');
+
+if($leave_day>=30){
+    return $this->error('You reached your maximum leave day','',400);
+
+}
+ $request['total_leave']=$days;
    $leave=Leave::create($request->all());
   return $this->success('Leave request sent',$leave);
+
+        //code...
+    } catch (\Throwable $th) {
+        return $this->error('Something went wrong.Try again later','',400);
+
+    }
     }
 
     /**

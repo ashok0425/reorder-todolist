@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function() {
     Route::get('leaves','LeaveController@index');
+    Route::get('remaining_leaves','LeaveController@remainLeave');
     Route::post('leaves/store','LeaveController@store');
 
 

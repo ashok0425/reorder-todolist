@@ -21,6 +21,7 @@ class CreateLeavesTable extends Migration
             $table->timestamp('request_created_at')->default(now());
             $table->timestamp('vacation_start_date')->nullable();
             $table->timestamp('vacation_end_date')->nullable();            
+            $table->timestamp('total_leave')->default(1);            
             $table->timestamps();
         });
     }

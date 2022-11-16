@@ -16,6 +16,7 @@ class Leave extends Model
         'vacation_end_date',
         'request_created_at',
         'status',
+        'total_leave'
     ];
 
     public function employe(){

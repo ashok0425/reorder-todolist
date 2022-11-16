@@ -37,12 +37,31 @@ class ManagerController extends Controller
    
     public function update(Request $request)
     {
+
+         // checking validator if fail
+    $validate=Validator::make($request->all(),[
+        'leave_id'=>'required',
+        'status'=>'required',
+    ]);
+    if ($validate->fails()) {
+        $error=[];
+       $messages=$validate->errors()->messages();
+    foreach ($messages as $key => $value) {
+        $error[]=$value[0];
+    }
+    return $this->error($error,'',400);
+    }
+
+        try {
         $leave=Leave::find($request->leave_id);
         $leave->resolved_by=auth()->user()->id;
         $leave->status=$request->status;
         $leave->save();
         return $this->success('Leaves updated',$leave);
+    } catch (\Throwable $th) {
+        return $this->error('Something went wrong.Try again later','',400);
 
+    }
     }
 
 }

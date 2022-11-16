@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 16, 2022 at 03:01 PM
+-- Generation Time: Nov 16, 2022 at 03:33 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.28
 
@@ -51,6 +51,7 @@ CREATE TABLE `leaves` (
   `request_created_at` timestamp NOT NULL DEFAULT '2022-11-16 07:27:57',
   `vacation_start_date` timestamp NULL DEFAULT NULL,
   `vacation_end_date` timestamp NULL DEFAULT NULL,
+  `total_leave` int(11) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -59,10 +60,12 @@ CREATE TABLE `leaves` (
 -- Dumping data for table `leaves`
 --
 
-INSERT INTO `leaves` (`id`, `author`, `status`, `resolved_by`, `request_created_at`, `vacation_start_date`, `vacation_end_date`, `created_at`, `updated_at`) VALUES
-(1, 2, 1, 1, '2022-11-16 07:27:57', '2022-02-01 18:15:00', '2022-02-03 18:15:00', '2022-11-16 07:51:29', '2022-11-16 08:08:23'),
-(2, 2, 2, NULL, '2022-11-16 07:27:57', '2022-02-01 18:15:00', '2022-02-03 18:15:00', '2022-11-16 07:55:51', '2022-11-16 07:55:51'),
-(3, 2, 0, NULL, '2022-11-16 07:27:57', '2022-02-01 18:15:00', '2022-02-03 18:15:00', '2022-11-16 07:55:53', '2022-11-16 07:55:53');
+INSERT INTO `leaves` (`id`, `author`, `status`, `resolved_by`, `request_created_at`, `vacation_start_date`, `vacation_end_date`, `total_leave`, `created_at`, `updated_at`) VALUES
+(1, 2, 1, 1, '2022-11-16 07:27:57', '2022-02-01 18:15:00', '2022-02-03 18:15:00', 1, '2022-11-16 07:51:29', '2022-11-16 08:08:23'),
+(2, 2, 2, NULL, '2022-11-16 07:27:57', '2022-02-01 18:15:00', '2022-02-03 18:15:00', 28, '2022-11-16 07:55:51', '2022-11-16 07:55:51'),
+(3, 2, 0, NULL, '2022-11-16 07:27:57', '2022-02-01 18:15:00', '2022-02-03 18:15:00', 1, '2022-11-16 07:55:53', '2022-11-16 07:55:53'),
+(4, 2, 0, NULL, '2022-11-16 07:27:57', '2022-02-01 18:15:00', '2022-02-03 18:15:00', 2, '2022-11-16 08:44:33', '2022-11-16 08:44:33'),
+(5, 2, 0, NULL, '2022-11-16 07:27:57', '2022-02-01 18:15:00', '2022-02-03 18:15:00', 2, '2022-11-16 08:44:57', '2022-11-16 08:44:57');
 
 -- --------------------------------------------------------
 
@@ -128,7 +131,8 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 (2, 'App\\Models\\User', 1, 'token', '30518af66bdb6e3fb729126e2229ac1b9618b658b742b0e0c6b7d5ab30323387', '[\"*\"]', NULL, '2022-11-16 07:16:34', '2022-11-16 07:16:34'),
 (3, 'App\\Models\\User', 1, 'token', '26aca0528a1e7a13fa55c43a76a9b347eeca63600c3f5ac94085846bbd987d61', '[\"*\"]', '2022-11-16 07:46:07', '2022-11-16 07:17:48', '2022-11-16 07:46:07'),
 (4, 'App\\Models\\User', 2, 'token', 'a8aa7141bd12234d84cffec4b70e258708caa58516c9563d7eba626b11164c57', '[\"*\"]', '2022-11-16 08:05:28', '2022-11-16 07:47:39', '2022-11-16 08:05:28'),
-(5, 'App\\Models\\User', 1, 'token', 'b684b573cc7963fb58ae0d073ef772e6f49611274bcd0288c0568215f0717eae', '[\"*\"]', '2022-11-16 08:09:35', '2022-11-16 08:05:53', '2022-11-16 08:09:35');
+(5, 'App\\Models\\User', 1, 'token', 'b684b573cc7963fb58ae0d073ef772e6f49611274bcd0288c0568215f0717eae', '[\"*\"]', '2022-11-16 08:40:07', '2022-11-16 08:05:53', '2022-11-16 08:40:07'),
+(6, 'App\\Models\\User', 2, 'token', '13b87222713d9617522e28bc38caf885dce4e3241486a306c16d7415526c38ba', '[\"*\"]', '2022-11-16 08:46:27', '2022-11-16 08:40:37', '2022-11-16 08:46:27');
 
 -- --------------------------------------------------------
 
@@ -150,7 +154,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('vh5uwVUfqmGxsaAYRl5WmHGzmoeZiPKI3xPFc2Hf', NULL, '127.0.0.1', 'PostmanRuntime/7.29.2', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiNVlxc3kzMHVuYjBHSlJ0Vks5d1ZpcmFxZmhLS1UxSTRQcE5ORVB0MCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1668606777);
+('vh5uwVUfqmGxsaAYRl5WmHGzmoeZiPKI3xPFc2Hf', NULL, '127.0.0.1', 'PostmanRuntime/7.29.2', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiNVlxc3kzMHVuYjBHSlJ0Vks5d1ZpcmFxZmhLS1UxSTRQcE5ORVB0MCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1668608727);
 
 -- --------------------------------------------------------
 
@@ -251,7 +255,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `leaves`
 --
 ALTER TABLE `leaves`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -263,7 +267,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
