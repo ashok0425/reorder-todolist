@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/alfacode/sunrisepureveghotel.com/
+    - /bin/cp * $DEPLOYPATH
+
