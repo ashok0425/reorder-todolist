@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Auth;
 |
 */
    
-Route::get('faq',function(){
-    dd('welcome');
+Route::get('/',function(){
+    return 'Hello there!, /task is url for assigment.';
 });
 
 

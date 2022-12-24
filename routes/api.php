@@ -14,21 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-    Route::post('login','AuthController@login');
-
-
 
 Route::middleware('auth:sanctum')->group(function() {
-    Route::get('leaves','LeaveController@index');
-    Route::get('remaining_leaves','LeaveController@remainLeave');
-    Route::post('leaves/store','LeaveController@store');
-
-
-    // for manager 
-Route::prefix('manager')->group(function() {
-    Route::get('leaves','ManagerController@index');
-    Route::patch('leaves','ManagerController@update');
-});
 
 
    
